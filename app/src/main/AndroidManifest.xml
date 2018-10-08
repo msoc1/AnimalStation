@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.fixed4fun.android.animalstation">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".StartActivity"
+            android:label="Animal Station"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="landscape">
+
+        </activity>
+        <activity
+            android:name=".ChosenAnimal"
+            android:label="chosen animal"
+            android:screenOrientation="landscape">
+
+        </activity>
+
+        <activity
+            android:name=".ChosenAnimalsView"
+            android:label="view for chosen animals"
+            android:screenOrientation="landscape">
+
+        </activity>
+        <activity
+            android:name=".NameQuiz"
+            android:label="view for chosen animals"
+            android:screenOrientation="landscape">
+
+        </activity>
+        <activity
+            android:name=".SoundQuiz"
+            android:label="view for chosen animals"
+            android:screenOrientation="landscape">
+
+        </activity>
+        <activity
+            android:name=".IconQuiz"
+            android:label="view for chosen animals"
+            android:screenOrientation="landscape">
+
+        </activity>
+        <activity
+            android:name=".FootPrintQuiz"
+            android:label="view for chosen animals"
+            android:screenOrientation="landscape">
+
+        </activity>
+        <activity
+            android:name=".LanguagesView"
+            android:label="view for chosen animals"
+            android:screenOrientation="landscape">
+
+        </activity>
+    </application>
+
+</manifest>

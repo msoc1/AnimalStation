@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:id="@+id/background_for_animal">
+
+
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/chosen_animal_image"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_above="@id/names"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@id/back_to_list"
+        android:layout_toLeftOf="@id/back_to_main"
+        android:layout_toRightOf="@id/back_to_list"
+        android:layout_toStartOf="@id/back_to_main"
+        android:scaleType="fitCenter"
+        app:riv_corner_radius="30dip"
+        app:riv_mutate_background="true" />
+
+
+    <ImageView
+        android:id="@+id/back_to_list"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/back_to_list" />
+
+    <ImageView
+        android:id="@+id/back_to_main"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/back_to_main" />
+
+    <ImageView
+        android:id="@+id/falg2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:scaleType="fitCenter"
+        />
+
+
+    <include
+        android:id="@+id/names"
+        layout="@layout/name_for_animal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="8dp" />
+
+
+</RelativeLayout>
