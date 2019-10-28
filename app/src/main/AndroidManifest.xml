@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.fixed4fun.android.animalstation">
 
     <application
@@ -10,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".StartActivity"
+            android:name=".activities.StartActivity"
             android:label="Animal Station"
             android:screenOrientation="landscape">
             <intent-filter>
@@ -21,53 +22,61 @@
         </activity>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:screenOrientation="landscape">
 
         </activity>
         <activity
-            android:name=".ChosenAnimal"
+            android:name=".activities.ChosenAnimal"
             android:label="chosen animal"
             android:screenOrientation="landscape">
 
         </activity>
 
         <activity
-            android:name=".ChosenAnimalsView"
+            android:name=".activities.ChosenAnimalsView"
             android:label="view for chosen animals"
             android:screenOrientation="landscape">
 
         </activity>
         <activity
-            android:name=".NameQuiz"
+            android:name=".quizActivities.NameQuiz"
             android:label="view for chosen animals"
             android:screenOrientation="landscape">
 
         </activity>
         <activity
-            android:name=".SoundQuiz"
+            android:name=".quizActivities.SoundQuiz"
             android:label="view for chosen animals"
             android:screenOrientation="landscape">
 
         </activity>
         <activity
-            android:name=".IconQuiz"
+            android:name=".quizActivities.IconQuiz"
             android:label="view for chosen animals"
             android:screenOrientation="landscape">
 
         </activity>
         <activity
-            android:name=".FootPrintQuiz"
+            android:name=".quizActivities.FootPrintQuiz"
             android:label="view for chosen animals"
             android:screenOrientation="landscape">
 
         </activity>
         <activity
-            android:name=".LanguagesView"
+            android:name=".activities.LanguagesView"
             android:label="view for chosen animals"
             android:screenOrientation="landscape">
 
         </activity>
+        <activity android:name=".activities.RegisterActivity"
+            android:screenOrientation="landscape"/>
+
+        <activity android:name=".activities.RankingActivity"
+            android:screenOrientation="landscape"/>
+
+        <activity android:name=".quizActivities.SpecialQuiz"
+            android:screenOrientation="landscape"/>
     </application>
 
 </manifest>

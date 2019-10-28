@@ -1,98 +1,114 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/liscie"
-    tools:context=".IconQuiz">
+    tools:context=".quizActivities.IconQuiz">
 
 
-    <LinearLayout
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/iconQuizOne"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/krowa1"
+        app:layout_constraintBottom_toTopOf="@+id/iconQuizThree"
+        app:layout_constraintEnd_toStartOf="@+id/iconQuizTwo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:riv_corner_radius="30dip"
+        app:riv_mutate_background="true" />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/iconQuizTwo"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/dog_icon"
+        app:layout_constraintBottom_toTopOf="@+id/iconQuizFour"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iconQuizOne"
+        app:layout_constraintTop_toTopOf="parent"
+        app:riv_corner_radius="30dip"
+        app:riv_mutate_background="true" />
+
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/iconQuizThree"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:src="@drawable/dog_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/iconQuizFour"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iconQuizOne"
+        app:riv_corner_radius="30dip"
+        app:riv_mutate_background="true" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            >
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                app:riv_corner_radius="30dip"
-                app:riv_mutate_background="true"
-                android:id="@+id/iconQuizOne"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/krowa1"
-                android:layout_marginRight="8dp"
-                android:layout_marginEnd="8dp" />
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                app:riv_corner_radius="30dip"
-                app:riv_mutate_background="true"
-                android:id="@+id/iconQuizTwo"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/dog_icon" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            >
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                app:riv_corner_radius="30dip"
-                app:riv_mutate_background="true"
-                android:layout_marginRight="8dp"
-                android:id="@+id/iconQuizThree"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/dog_icon"
-                android:layout_marginEnd="8dp" />
-
-            <com.makeramen.roundedimageview.RoundedImageView
-                app:riv_corner_radius="30dip"
-                app:riv_mutate_background="true"
-                android:id="@+id/iconQuizFour"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/dog_icon" />
-        </LinearLayout>
-    </LinearLayout>
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/iconQuizFour"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/dog_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iconQuizThree"
+        app:layout_constraintTop_toBottomOf="@+id/iconQuizTwo"
+        app:riv_corner_radius="30dip"
+        app:riv_mutate_background="true" />
 
 
     <ImageView
-        android:padding="8dp"
         android:id="@+id/icon_quiz"
-        android:layout_centerInParent="true"
-        android:layout_height="150dp"
-        android:layout_width="150dp"
-        android:src="@drawable/back_to_list"/>
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/back_to_list"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/back_to_main"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/back_to_main" />
+        android:src="@drawable/back_to_main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
