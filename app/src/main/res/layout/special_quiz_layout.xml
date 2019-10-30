@@ -7,8 +7,21 @@
     android:layout_height="match_parent"
     android:background="#ffffff">
 
-    <include layout="@layout/icon_quiz"
+
+    <Chronometer
+        android:id="@+id/chronometer"
+        style="@style/ranking_text_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="1dp"
+        android:textColor="@android:color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="0:00" />
+
+    <include
         android:id="@+id/special_quiz_include"
+        layout="@layout/icon_quiz"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="32dp"
@@ -16,5 +29,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/how_many_questions"
+        style="@style/ranking_text_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="/XX" />
+
+    <TextView
+        android:id="@+id/question_number"
+        style="@style/ranking_text_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="1dp"
+        app:layout_constraintEnd_toStartOf="@+id/how_many_questions"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="X" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

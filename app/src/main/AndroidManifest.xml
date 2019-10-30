@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.fixed4fun.android.animalstation">
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
 
     <application
         android:allowBackup="true"
@@ -10,8 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
-            android:name=".activities.StartActivity"
+            android:name="com.fixed4fun.android.animalstation.activities.StartActivity"
             android:label="Animal Station"
             android:screenOrientation="landscape">
             <intent-filter>
@@ -22,60 +26,62 @@
         </activity>
 
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.fixed4fun.android.animalstation.activities.MainActivity"
             android:screenOrientation="landscape">
 
         </activity>
         <activity
-            android:name=".activities.ChosenAnimal"
+            android:name="com.fixed4fun.android.animalstation.activities.ChosenAnimal"
             android:label="chosen animal"
             android:screenOrientation="landscape">
 
         </activity>
 
         <activity
-            android:name=".activities.ChosenAnimalsView"
+            android:name="com.fixed4fun.android.animalstation.activities.ChosenAnimalsView"
             android:label="view for chosen animals"
             android:screenOrientation="landscape">
 
         </activity>
         <activity
-            android:name=".quizActivities.NameQuiz"
+            android:name="com.fixed4fun.android.animalstation.quizActivities.NameQuiz"
             android:label="view for chosen animals"
             android:screenOrientation="landscape">
 
         </activity>
         <activity
-            android:name=".quizActivities.SoundQuiz"
+            android:name="com.fixed4fun.android.animalstation.quizActivities.SoundQuiz"
             android:label="view for chosen animals"
             android:screenOrientation="landscape">
 
         </activity>
         <activity
-            android:name=".quizActivities.IconQuiz"
+            android:name="com.fixed4fun.android.animalstation.quizActivities.IconQuiz"
             android:label="view for chosen animals"
             android:screenOrientation="landscape">
 
         </activity>
         <activity
-            android:name=".quizActivities.FootPrintQuiz"
+            android:name="com.fixed4fun.android.animalstation.quizActivities.FootPrintQuiz"
             android:label="view for chosen animals"
             android:screenOrientation="landscape">
 
         </activity>
         <activity
-            android:name=".activities.LanguagesView"
+            android:name="com.fixed4fun.android.animalstation.activities.LanguagesView"
             android:label="view for chosen animals"
             android:screenOrientation="landscape">
 
         </activity>
-        <activity android:name=".activities.RegisterActivity"
+        <activity android:name="com.fixed4fun.android.animalstation.activities.RegisterActivity"
             android:screenOrientation="landscape"/>
 
-        <activity android:name=".activities.RankingActivity"
+        <activity android:name="com.fixed4fun.android.animalstation.activities.RankingActivity"
             android:screenOrientation="landscape"/>
 
-        <activity android:name=".quizActivities.SpecialQuiz"
+        <activity android:name="com.fixed4fun.android.animalstation.quizActivities.SpecialQuiz"
+            android:screenOrientation="landscape"/>
+        <activity android:name=".activities.YourScoreActivity"
             android:screenOrientation="landscape"/>
     </application>
 

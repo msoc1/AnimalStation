@@ -6,8 +6,6 @@ package com.fixed4fun.android.animalstation.utilities;
 
 import com.fixed4fun.android.animalstation.objects.Animal;
 import com.fixed4fun.android.animalstation.R;
-import com.fixed4fun.android.animalstation.utilities.Translations;
-import com.fixed4fun.android.animalstation.utilities.Voices;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,11 +4,12 @@ package com.fixed4fun.android.animalstation.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.GridView;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.fixed4fun.android.animalstation.R;
 import com.fixed4fun.android.animalstation.adapters.AnimalAdapter;

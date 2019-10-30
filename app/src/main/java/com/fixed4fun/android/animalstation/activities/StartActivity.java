@@ -3,11 +3,12 @@ package com.fixed4fun.android.animalstation.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.fixed4fun.android.animalstation.R;
 
@@ -31,13 +32,12 @@ public class StartActivity extends AppCompatActivity {
 
         TextView policy = findViewById(R.id.policy);
         policy.setOnClickListener(v -> {
-                String url = "http://www.poszukiwaczezycia.pl/privacy-policy.html";
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                startActivity(i);
+            String url = "http://www.poszukiwaczezycia.pl/privacy-policy.html";
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(url));
+            startActivity(i);
 
         });
-
 
 
     }
