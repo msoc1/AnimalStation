@@ -27,194 +27,241 @@ rabbit
 koala
  */
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.StrictMode;
+import android.util.Log;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.fixed4fun.android.animalstation.R;
 import com.fixed4fun.android.animalstation.activities.MainActivity;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
-public class Translations {
+public class Translations extends AppCompatActivity {
+    static String polishLanguage;
+    static String englishLanguage;
+    static String spanishLanguage;
+    static String frenchLanguage;
+    static String italianLanguage;
+    static String ukrainianLanguage;
+    private static Translate translate;
+    private static boolean connected;
 
-    public static List<String> getTranslations() {
-        ArrayList<String> translations = new ArrayList<>();
+    private static final String SHARED_PREFS = "sharedPrefs";
+    private static final String ENGLISH_KEY = "english_language";
+    private static final String POLISH_KEY = "polish_language";
+    static String TAG = "testing language transl";
+    static ArrayList<String> translationsNew;
 
-        if (MainActivity.languageNumber == 0) {
-            //POLISH LANGUAGE//
+    public static ArrayList<String> getTranslationsNew(Context context) {
+        ArrayList<String> engArray = new ArrayList<>();
+        translationsNew = new ArrayList<>();
+        if (MainActivity.languageNumber == 1) {
+            Log.d(TAG, "getTranslationsNew: translationsNew: " + translationsNew.toString());
+            Log.d(TAG, "getTranslationsNew: polish: not here" );
+            Log.d(TAG, "getTranslationsNew: english: " + engArray.toString());
 
-            translations.add("PIES");
-            translations.add("KOT");
-            translations.add("KROWA");
-            translations.add("KOŃ");
-            translations.add("ŚWINIA");
-            translations.add("KOZA");
-            translations.add("LIS");
-            translations.add("OWCA");
-            translations.add("KURA");
-            translations.add("SOWA");
-            translations.add("SŁOŃ");
-            translations.add("ŻYRAFA");
-            translations.add("LEW");
-            translations.add("TYRGYS");
-            translations.add("NOSOROŻEC");
-            translations.add("PINGWIN");
-            translations.add("NIEDŹWIEDŹ");
-            translations.add("PANDA");
-            translations.add("MAŁPA");
-            translations.add("HIPOPOTAM");
-            translations.add("KANGUR");
-            translations.add("DELFIN");
-            translations.add("KRÓLIK");
-            translations.add("KOALA");
-            translations.add("ZALOGUJ SIE");
+            if (context.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE).getString(ENGLISH_KEY, englishLanguage) == null) {
+                //ENGLISH LANGUAGE//
+                engArray.add("dog");
+                engArray.add("cat");
+                engArray.add("cow");
+                engArray.add("horse");
+                engArray.add("pig");
+                engArray.add("goat");
+                engArray.add("fox");
+                engArray.add("sheep");
+                engArray.add("chicken");
+                engArray.add("owl");
+                engArray.add("elephant");
+                engArray.add("giraffe");
+                engArray.add("lion");
+                engArray.add("tiger");
+                engArray.add("rhinoceros");
+                engArray.add("penguin");
+                engArray.add("bear");
+                engArray.add("panda");
+                engArray.add("monkey");
+                engArray.add("hippo");
+                engArray.add("kangaroo");
+                engArray.add("dolphin");
+                engArray.add("rabbit");
+                engArray.add("koala");
+                engArray.add("SIGN IN");
+                /*index 25*/engArray.add("sign out");
+                engArray.add("local");
+                engArray.add("global");
+                engArray.add("username");
+                engArray.add("password");
+                /*index 30*/engArray.add("your score");
+                engArray.add("anonymous");
+                engArray.add("register");
+                engArray.add("log in");
+                engArray.add("Enter username!");
+                /*index 35*/ engArray.add("Username too long!");
+                engArray.add("Enter password!");
+                engArray.add("Enter longer password!");
+                engArray.add("Spaces not allowed!");
+                engArray.add("You can log in!");
+                /*index 40*/engArray.add("Cannot log in:");
+                engArray.add("Logged in!");
+                engArray.add("Signing out");
 
-        } else if (MainActivity.languageNumber == 1) {
-            //ENGLISH LANGUAGE//
+                translationsNew.addAll(engArray);
+                String englishJSON = new Gson().toJson(engArray);
+                saveData(context, ENGLISH_KEY, englishJSON);
+            } else {
+                String englishLanguageJson = loadData(context, ENGLISH_KEY);
+                translationsNew = (ArrayList<String>) fromJson(englishLanguageJson, new TypeToken<ArrayList<String>>() {
+                }.getType());
 
-            translations.add("DOG");
-            translations.add("CAT");
-            translations.add("cow");
-            translations.add("horse");
-            translations.add("pig");
-            translations.add("goat");
-            translations.add("fox");
-            translations.add("sheep");
-            translations.add("chicken");
-            translations.add("owl");
-            translations.add("elephant");
-            translations.add("giraffe");
-            translations.add("lion");
-            translations.add("tiger");
-            translations.add("rhinoceros");
-            translations.add("penguin");
-            translations.add("bear");
-            translations.add("panda");
-            translations.add("monkey");
-            translations.add("hippo");
-            translations.add("kangaroo");
-            translations.add("dolphin");
-            translations.add("rabbit");
-            translations.add("KOALA");
-            translations.add("SIGN IN");
+            }
+            engArray.addAll(translationsNew);
+            Log.d(TAG, "getTranslationsNew: translationsNew: " + translationsNew.toString());
+            Log.d(TAG, "getTranslationsNew: polish: not here" );
+            Log.d(TAG, "getTranslationsNew: english: " + engArray.toString());
+            Log.d(TAG, "getTranslationsNew: ending english");
+            return engArray;
 
-        } else if (MainActivity.languageNumber == 2) {
-            //SPANISH LANGUAGE//
-
-            translations.add("perro");
-            translations.add("gato");
-            translations.add("vaca");
-            translations.add("caballo");
-            translations.add("cerdo");
-            translations.add("cabra");
-            translations.add("zorro");
-            translations.add("oveja");
-            translations.add("gallina");
-            translations.add("búho");
-            translations.add("elefante");
-            translations.add("jirafa");
-            translations.add("león");
-            translations.add("tigre");
-            translations.add("rinoceronte");
-            translations.add("pingüino");
-            translations.add("soportar");
-            translations.add("panda");
-            translations.add("mono");
-            translations.add("hipopótamo");
-            translations.add("canguro");
-            translations.add("delfín");
-            translations.add("conejo");
-            translations.add("koala");
-            translations.add("registrarse");
-        } else if (MainActivity.languageNumber == 3) {
-            //FRENCH LANGUAGE//
-
-            translations.add("chien");
-            translations.add("chat");
-            translations.add("vache");
-            translations.add("cheval");
-            translations.add("porc");
-            translations.add("chèvre");
-            translations.add("renard");
-            translations.add("mouton");
-            translations.add("poule");
-            translations.add("hibou");
-            translations.add("éléphant");
-            translations.add("girafe");
-            translations.add("lion");
-            translations.add("tigre");
-            translations.add("rhinocéros");
-            translations.add("manchot");
-            translations.add("porter");
-            translations.add("panda");
-            translations.add("singe");
-            translations.add("hippopotame");
-            translations.add("kangourou");
-            translations.add("dauphin");
-            translations.add("lapin");
-            translations.add("koala");
-            translations.add("se connecter");
-
-        } else if (MainActivity.languageNumber == 4) {
-            //ITALIAN LANGUAGE//
-
-            translations.add("cane");
-            translations.add("gatto");
-            translations.add("mucca");
-            translations.add("cavallo");
-            translations.add("maiale");
-            translations.add("capra");
-            translations.add("volpe");
-            translations.add("pecora");
-            translations.add("gallina");
-            translations.add("gufo");
-            translations.add("elefante");
-            translations.add("giraffa");
-            translations.add("leone");
-            translations.add("tigre");
-            translations.add("rinoceronte");
-            translations.add("pinguino");
-            translations.add("sopportare");
-            translations.add("panda");
-            translations.add("scimmia");
-            translations.add("ippopotamo");
-            translations.add("canguro");
-            translations.add("delfino");
-            translations.add("coniglio");
-            translations.add("koala");
-            translations.add("registrati");
-
-        } else if (MainActivity.languageNumber == 5) {
-            //UKRAINIAN LANGUAGE//
-
-            translations.add("собака");
-            translations.add("кіт");
-            translations.add("корова");
-            translations.add("кінь");
-            translations.add("свиня");
-            translations.add("коза");
-            translations.add("лисиця");
-            translations.add("вівця");
-            translations.add("курка");
-            translations.add("пугач");
-            translations.add("слон");
-            translations.add("жираф");
-            translations.add("лев");
-            translations.add("тигр");
-            translations.add("носоріг");
-            translations.add("пінгвін");
-            translations.add("нести");
-            translations.add("панда");
-            translations.add("мавпа");
-            translations.add("гіпопотам");
-            translations.add("кенгуру");
-            translations.add("дельфін");
-            translations.add("кролик");
-            translations.add("коала");
-            translations.add("увійти");
-
+        } else if (MainActivity.languageNumber == 0) {
+            Log.d(TAG, "getTranslationsNew: starting polish");
+            Log.d(TAG, "getTranslationsNew: polish key: " + POLISH_KEY);
+            Log.d(TAG, "getTranslationsNew: translationsNew: " + translationsNew.toString());
+            Log.d(TAG, "getTranslationsNew: polish: not here" );
+            Log.d(TAG, "getTranslationsNew: english: " + engArray.toString());
+            Log.d(TAG, "getTranslationsNew: key: " + loadData(context, POLISH_KEY) );
+            if (loadData(context, POLISH_KEY).length()!=0) {
+                Log.d(TAG, "getTranslationsNew: there is key");
+                //translationsNew.clear();
+                String polishLanguageJson = loadData(context, POLISH_KEY);
+                Log.d(TAG, "getTranslationsNew: polishlanguage json: " + polishLanguageJson.length());
+                translationsNew = (ArrayList<String>) fromJson(polishLanguageJson, new TypeToken<ArrayList<String>>() {
+                }.getType());
+                Log.d(TAG, "getTranslationsNew: translationsNew: " + translationsNew.toString());
+                Log.d(TAG, "getTranslationsNew: polish: not here" );
+                Log.d(TAG, "getTranslationsNew: english: " + engArray.toString());
+                return translationsNew;
+            } else {
+                Log.d(TAG, "getTranslationsNew: no prefs");
+                if (checkInternetConnection()) {
+                    Log.d(TAG, "getTranslationsNew: checking connection");
+                    String englishLanguageJson = loadData(context, ENGLISH_KEY);
+                    Log.d(TAG, "getTranslationsNew: englishJson" + englishLanguageJson);
+                    translationsNew = (ArrayList<String>) fromJson(englishLanguageJson, new TypeToken<ArrayList<String>>() {
+                    }.getType());
+                    ArrayList<String> polishLanguageArray = new ArrayList<>();
+                    for (int i = 0; i < translationsNew.size(); i++) {
+                        polishLanguageArray.add(translate(translationsNew.get(i), "pl"));
+                    }
+                    Log.d(TAG, "getTranslationsNew: translationsNew: " + translationsNew.toString());
+                    Log.d(TAG, "getTranslationsNew: polish: e" + polishLanguageArray.toString());
+                    Log.d(TAG, "getTranslationsNew: english: " + engArray.toString());
+                    String polishJSON = new Gson().toJson(polishLanguageArray);
+                    saveData(context, POLISH_KEY, polishJSON);
+                    translationsNew.addAll(polishLanguageArray);
+                    Log.d(TAG, "getTranslationsNew: adding translations");
+                    Log.d(TAG, "getTranslationsNew: translationsNew: " + translationsNew.toString());
+                    Log.d(TAG, "getTranslationsNew: polish: e" + polishLanguageArray.toString());
+                    Log.d(TAG, "getTranslationsNew: english: " + engArray.toString());
+                }
+            }
         }
+        return translationsNew;
 
-
-        return translations;
     }
 
 
+    public static void saveData(Context context, String KEYwhichLanguage, String languageToStore) {
+        Log.d(TAG, "getTranslationsNew: in save data");
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(KEYwhichLanguage, languageToStore);
+        editor.apply();
+    }
+
+    public static String loadData(Context context, String whichLanguageKEY) {
+        Log.d(TAG, "getTranslationsNew: in loadData");
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        Log.d(TAG, "getTranslationsNew: after getting sharedPrefs");
+
+        String text = sharedPreferences.getString(whichLanguageKEY, "");
+        Log.d(TAG, "getTranslationsNew: after getting text: " + text);
+
+        return text;
+    }
+
+    public static Object fromJson(String jsonString, Type type) {
+        return new Gson().fromJson(jsonString, type);
+    }
+
+    public static boolean checkInternetConnection() {
+
+        //Check internet connection:
+        ConnectivityManager connectivityManager = (ConnectivityManager) AnimalStation.getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        //Means that we are connected to a network (mobile or wi-fi)
+        connected = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
+
+        return connected;
+    }
+
+    public static void getTranslateService() {
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        try (InputStream is = AnimalStation.getContext().getResources().openRawResource(R.raw.credentials)) {
+
+            //Get credentials:
+            final GoogleCredentials myCredentials = GoogleCredentials.fromStream(is);
+
+            //Set credentials and get translate service:
+            TranslateOptions translateOptions = TranslateOptions.newBuilder().setCredentials(myCredentials).build();
+            translate = translateOptions.getService();
+
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+
+        }
+    }
+
+    public static String translate(String textToTranslate, String targerLanguage) {
+        Log.d(TAG, "getTranslationsNew: " + textToTranslate);
+        String translatedText = "";
+        getTranslateService();
+        Translation translation = translate.translate(
+                textToTranslate,
+                Translate.TranslateOption.sourceLanguage("en"),
+                Translate.TranslateOption.targetLanguage(targerLanguage), Translate.TranslateOption.model("base"));
+        translatedText = translation.getTranslatedText();
+        return translatedText;
+    }
 }
+
+
+// else if (MainActivity.languageNumber == 2) {
+//            //SPANISH LANGUAGE//
+//        } else if (MainActivity.languageNumber == 3) {
+//            //FRENCH LANGUAGE//
+//        } else if (MainActivity.languageNumber == 4) {
+//            //ITALIAN LANGUAGE//
+//        } else if (MainActivity.languageNumber == 5) {
+//            //UKRAINIAN LANGUAGE//
+
+
+

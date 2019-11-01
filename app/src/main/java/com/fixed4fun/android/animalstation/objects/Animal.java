@@ -30,7 +30,6 @@ public class Animal implements Parcelable {
     private int mAnimalSound2;
     private int mAnimalSound3;
     private String mAnimalName;
-    private int mAnimalVoice;
     private int mAnimalBlack;
     private int mBackground;
     private int iconsBig;
@@ -51,13 +50,12 @@ public class Animal implements Parcelable {
         mAnimalSound2 = in.readInt();
         mAnimalSound3 = in.readInt();
         mAnimalName = in.readString();
-        mAnimalVoice = in.readInt();
         mAnimalBlack = in.readInt();
         mBackground = in.readInt();
         iconsBig = in.readInt();
     }
 
-    public Animal(int mAnimalIcon, int mAnimalPicture, int mAnimalPicture2, int mAnimalPicture3, int mAnimalPicture4, int mAnimalPicture5, int mAnimalPicture6, int mAnimalPicture7, int mAnimalPicture8, int mAnimalPicture9, int mAnimalPicture10, int mAnimalSound, int mAnimalSound2, int mAnimalSound3, String mAnimalName, int mAnimalVoice, int mAnimalBlack, int mBackground, int iconsBig) {
+    public Animal(int mAnimalIcon, int mAnimalPicture, int mAnimalPicture2, int mAnimalPicture3, int mAnimalPicture4, int mAnimalPicture5, int mAnimalPicture6, int mAnimalPicture7, int mAnimalPicture8, int mAnimalPicture9, int mAnimalPicture10, int mAnimalSound, int mAnimalSound2, int mAnimalSound3, String mAnimalName, int mAnimalBlack, int mBackground, int iconsBig) {
         this.mAnimalIcon = mAnimalIcon;
         this.mAnimalPicture = mAnimalPicture;
         this.mAnimalPicture2 = mAnimalPicture2;
@@ -73,7 +71,6 @@ public class Animal implements Parcelable {
         this.mAnimalSound2 = mAnimalSound2;
         this.mAnimalSound3 = mAnimalSound3;
         this.mAnimalName = mAnimalName;
-        this.mAnimalVoice = mAnimalVoice;
         this.mAnimalBlack = mAnimalBlack;
         this.mBackground = mBackground;
         this.iconsBig = iconsBig;
@@ -139,10 +136,6 @@ public class Animal implements Parcelable {
         return mAnimalName;
     }
 
-    public int getmAnimalVoice() {
-        return mAnimalVoice;
-    }
-
     public int getmAnimalBlack() {
         return mAnimalBlack;
     }
@@ -177,7 +170,6 @@ public class Animal implements Parcelable {
         dest.writeInt(mAnimalSound2);
         dest.writeInt(mAnimalSound3);
         dest.writeString(mAnimalName);
-        dest.writeInt(mAnimalVoice);
         dest.writeInt(mAnimalBlack);
         dest.writeInt(mBackground);
         dest.writeInt(iconsBig);

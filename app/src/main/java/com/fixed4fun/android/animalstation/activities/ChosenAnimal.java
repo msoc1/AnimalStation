@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -19,6 +20,7 @@ import com.fixed4fun.android.animalstation.R;
 import com.fixed4fun.android.animalstation.objects.Animal;
 import com.fixed4fun.android.animalstation.utilities.AnimalsToUse;
 import com.fixed4fun.android.animalstation.utilities.LanguagesToUse;
+import com.fixed4fun.android.animalstation.utilities.LocaleMap;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,9 +33,8 @@ public class ChosenAnimal extends AppCompatActivity {
     ArrayList<Integer> imageToUse;
     private int currentImage = (int) (Math.random() * 10);
     private int currentSound = (int) (Math.random() * 3);
-    private int currentSound2 = (int) (Math.random() * 3);
     private SoundPool soundPool;
-    private SoundPool soundPool2;
+    TextToSpeech textToSpeech;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -42,6 +43,7 @@ public class ChosenAnimal extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.animal_detail_layout);
+        textToSpeech = new TextToSpeech(getApplicationContext(), i -> textToSpeech.setLanguage(LocaleMap.getLocales()));
 
         final ImageView falg = findViewById(R.id.falg2);
         falg.setImageResource(LanguagesToUse.getLanguages().get(MainActivity.languageNumber).getmLanguage());
@@ -55,10 +57,6 @@ public class ChosenAnimal extends AppCompatActivity {
                 soundPool.release();
                 soundPool = null;
             }
-            if (soundPool2 != null) {
-                soundPool2.release();
-                soundPool2 = null;
-            }
         });
 
 
@@ -66,7 +64,6 @@ public class ChosenAnimal extends AppCompatActivity {
 
 
         soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-        soundPool2 = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
 
         final Intent chosenAnimal = getIntent();
 
@@ -135,16 +132,8 @@ public class ChosenAnimal extends AppCompatActivity {
                 soundPool.release();
                 soundPool = null;
             }
-            if (soundPool2 != null) {
-                soundPool2.release();
-                soundPool2 = null;
-            }
         });
-        final ArrayList<Integer> soundsToUse2 = new ArrayList<>();
 
-        soundsToUse2.add(soundPool2.load(getApplicationContext(), animal.getmAnimalVoice(), 1));
-        soundsToUse2.add(soundPool2.load(getApplicationContext(), animal.getmAnimalVoice(), 1));
-        soundsToUse2.add(soundPool2.load(getApplicationContext(), animal.getmAnimalVoice(), 1));
 
 
         TextView animalName = findViewById(R.id.name_of_anmial);
@@ -155,9 +144,7 @@ public class ChosenAnimal extends AppCompatActivity {
 
 
         animalsNames.setOnClickListener(v -> {
-            currentSound2++;
-            currentSound2 = currentSound2 % soundsToUse2.size();
-            soundPool2.play(soundsToUse2.get(currentSound2), 1, 1, 0, 0, 1);
+            textToSpeech.speak(animal.getmAnimalName(), TextToSpeech.QUEUE_FLUSH, null);
 
         });
 
@@ -173,10 +160,6 @@ public class ChosenAnimal extends AppCompatActivity {
             if (soundPool != null) {
                 soundPool.release();
                 soundPool = null;
-            }
-            if (soundPool2 != null) {
-                soundPool2.release();
-                soundPool2 = null;
             }
         });
 
@@ -205,10 +188,6 @@ public class ChosenAnimal extends AppCompatActivity {
         if (soundPool != null) {
             soundPool.release();
             soundPool = null;
-        }
-        if (soundPool2 != null) {
-            soundPool2.release();
-            soundPool2 = null;
         }
         finish();
 

@@ -9,7 +9,7 @@
     android:background="@drawable/forrest3">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/usernameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
@@ -26,17 +26,17 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:hint="Name"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView"
-        app:layout_constraintStart_toEndOf="@+id/textView" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/usernameTextView"
+        app:layout_constraintStart_toEndOf="@+id/usernameTextView" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/passwordTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:text="Password"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintStart_toStartOf="@+id/usernameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/usernameTextView" />
 
     <EditText
         android:id="@+id/passwordEditText"
@@ -46,8 +46,8 @@
         android:ems="10"
         android:hint="password"
         android:inputType="textPassword"
-        app:layout_constraintBaseline_toBaselineOf="@+id/textView2"
-        app:layout_constraintStart_toEndOf="@+id/textView2" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/passwordTextView"
+        app:layout_constraintStart_toEndOf="@+id/passwordTextView" />
 
     <Button
         android:id="@+id/register_button"

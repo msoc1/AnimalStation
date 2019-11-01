@@ -20,11 +20,9 @@ import com.fixed4fun.android.animalstation.quizActivities.IconQuiz;
 import com.fixed4fun.android.animalstation.quizActivities.NameQuiz;
 import com.fixed4fun.android.animalstation.quizActivities.SoundQuiz;
 import com.fixed4fun.android.animalstation.quizActivities.SpecialQuiz;
+import com.fixed4fun.android.animalstation.utilities.AnimalStation;
 import com.fixed4fun.android.animalstation.utilities.Translations;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -35,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button signInButton;
     private FirebaseAuth firebaseAuth;
     static ArrayList<Score> listOfScores;
+    ArrayList<String> textTranslations;// = Translations.getTranslationsNew(AnimalStation.getContext());
 
 
     public int numberOfQuestion;
@@ -45,18 +44,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String username;
 
 
-    private void addData(DataSnapshot dataSnapshot) {
-        for (DataSnapshot ds : dataSnapshot.child("scores").getChildren()) {
-            Score score = new Score();
-            score.setName(ds.getValue(Score.class).getName());
-            score.setTime(ds.getValue(Score.class).getTime());
-            score.setScore(ds.getValue(Score.class).getScore());
-            listOfScores.add(score);
-        }
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ArrayList<String> textTranslations = Translations.getTranslationsNew(AnimalStation.getContext());
+        Log.d("TAG", "onCreate: " + textTranslations.size());
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -98,20 +89,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             username = "";
         }
         signInButton = findViewById(R.id.sign_in_button);
-        signInButton.setText((Translations.getTranslations().get(24).toUpperCase() + " " + username));
 
         signInButton.setOnClickListener(this::onSignInButtonClick);
 
     }
 
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        textTranslations = Translations.getTranslationsNew(AnimalStation.getContext());
+        Log.d("TAG", "onCreate: " + textTranslations.size());
+        signInButton.setText(( " " + username));
+
+    }
+
     public void onSignInButtonClick(View view) {
         if (firebaseAuth.getCurrentUser() == null) {
-            signInButton.setText("Sign in");
             startActivity(new Intent(MainActivity.this, RegisterActivity.class));
         } else {
-            Toast.makeText(getApplicationContext(), "signing out " + firebaseAuth.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
-            signInButton.setText("Sign in");
+            String fullName = firebaseAuth.getCurrentUser().getEmail();
+            username = fullName.split("@")[0];
+            Toast.makeText(getApplicationContext(), textTranslations.get(42) + " " + username, Toast.LENGTH_SHORT).show();
+            signInButton.setText(textTranslations.get(24));
             firebaseAuth.signOut();
         }
     }
@@ -120,9 +120,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onResume() {
         super.onResume();
         if (firebaseAuth.getCurrentUser() == null) {
-            signInButton.setText("Sign in");
+            signInButton.setText(textTranslations.get(24));
         } else {
-            signInButton.setText("Sign out " + username);
+            String fullName = firebaseAuth.getCurrentUser().getEmail();
+            username = fullName.split("@")[0];
+            signInButton.setText(textTranslations.get(25)+" " + username);
         }
     }
 

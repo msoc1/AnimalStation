@@ -231,6 +231,7 @@ public class SpecialQuiz extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        MainActivity.pauseChrono = 0;
         super.onBackPressed();
         points = 0;
         numberOfQuestion = 0;

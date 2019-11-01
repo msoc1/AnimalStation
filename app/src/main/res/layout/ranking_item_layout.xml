@@ -31,7 +31,7 @@
     <TextView
         android:id="@+id/points_ranking"
         style="@style/ranking_text_style_list"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="40dp"
         app:layout_constraintBottom_toBottomOf="parent"

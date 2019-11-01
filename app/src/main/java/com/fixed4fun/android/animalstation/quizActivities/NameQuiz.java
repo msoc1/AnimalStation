@@ -5,18 +5,21 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.appcompat.app.AppCompatActivity;
+import android.speech.tts.TextToSpeech;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.fixed4fun.android.animalstation.R;
 import com.fixed4fun.android.animalstation.activities.MainActivity;
 import com.fixed4fun.android.animalstation.objects.Animal;
 import com.fixed4fun.android.animalstation.utilities.AnimalsToUse;
+import com.fixed4fun.android.animalstation.utilities.LocaleMap;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,11 +28,11 @@ public class NameQuiz extends AppCompatActivity {
     private Handler h;
     private Toast toast;
     private SoundPool soundPool2;
-    private int currentSound2;
     private int soundCorrect;
     private int soundWrong;
     ImageView viewCorrect;
     ImageView viewinCorrect;
+    TextToSpeech textToSpeech;
 
 
     @Override
@@ -80,15 +83,15 @@ public class NameQuiz extends AppCompatActivity {
 
         final TextView correctAnimalName = findViewById(R.id.name_of_anmial);
         int correctAnimal = MainActivity.checkForPrevious(randomAnimal, zwierzaki);
-        currentSound2 = soundPool2.load(getApplicationContext(), zwierzaki.get(correctAnimal).getmAnimalVoice(), 1);
-        correctAnimalName.setText(zwierzaki.get(correctAnimal).getmAnimalName());
+        String correctAnimalText = zwierzaki.get(correctAnimal).getmAnimalName();
+        correctAnimalName.setText(correctAnimalText);
+
+        textToSpeech = new TextToSpeech(getApplicationContext(), i -> textToSpeech.setLanguage(LocaleMap.getLocales()));
 
 
         ConstraintLayout soundForNames = findViewById(R.id.names);
         soundForNames.setOnClickListener(v -> {
-            if (soundPool2 != null) {
-                soundPool2.play(currentSound2, 1, 1, 0, 0, 1);
-            }
+            textToSpeech.speak(correctAnimalText, TextToSpeech.QUEUE_FLUSH, null);
         });
 
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/linearLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -52,16 +53,16 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="40dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="16dp"
         android:scrollbarSize="5dp"
         android:scrollbarThumbVertical="@android:color/darker_gray"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="@+id/background_rect"
         app:layout_constraintEnd_toStartOf="@+id/guideline10"
         app:layout_constraintStart_toStartOf="@+id/guideline8"
-        app:layout_constraintTop_toBottomOf="@+id/ranking_text_view" />
+        app:layout_constraintTop_toBottomOf="@+id/globalRanking" />
 
     <ImageView
         android:id="@+id/back_to_main"
@@ -72,5 +73,52 @@
         android:src="@drawable/back_to_main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/background_rect"
+        app:layout_constraintEnd_toEndOf="@+id/background_rect"
+        app:layout_constraintStart_toStartOf="@+id/background_rect"
+        app:layout_constraintTop_toBottomOf="@+id/ranking_text_view" />
+
+    <Button
+        android:id="@+id/localRanking"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:background="@android:color/transparent"
+        android:text="Local"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toStartOf="@+id/ranking_text_view"
+        app:layout_constraintStart_toStartOf="@+id/guideline8"
+        app:layout_constraintTop_toBottomOf="@+id/ranking_text_view" />
+
+    <Button
+        android:id="@+id/globalRanking"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:background="#1A000000"
+        android:text="Global"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toStartOf="@+id/guideline10"
+        app:layout_constraintStart_toEndOf="@+id/ranking_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/ranking_text_view" />
+
+    <TextView
+        android:id="@+id/logInTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="You have to log in to see local ranking"
+        android:textColor="@android:color/black"
+        android:textSize="30sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/background_rect"
+        app:layout_constraintEnd_toEndOf="@+id/background_rect"
+        app:layout_constraintStart_toStartOf="@+id/background_rect"
+        app:layout_constraintTop_toBottomOf="@+id/ranking_text_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

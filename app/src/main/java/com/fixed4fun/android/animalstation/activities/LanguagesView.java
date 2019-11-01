@@ -73,7 +73,7 @@ public class LanguagesView extends AppCompatActivity {
             }
 
 
-            chosenLanguage.putExtra("My Animal", AnimalsToUse.getAnimals().get(ChosenAnimalsView.pos));
+           // chosenLanguage.putExtra("My Animal", AnimalsToUse.getAnimals().get(ChosenAnimalsView.pos));
             chosenLanguage.putExtra("My Language", LanguagesToUse.getLanguages().get(position).getmCodeOfCountry());
             final int sound1 = soundPool.load(getApplicationContext(), LanguagesToUse.getLanguages().get(position).getmNameOfLanguage(), 1);
             h.postDelayed(() -> {

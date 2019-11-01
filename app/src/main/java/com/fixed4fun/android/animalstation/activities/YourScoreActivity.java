@@ -14,8 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.fixed4fun.android.animalstation.R;
 import com.fixed4fun.android.animalstation.objects.Score;
+import com.fixed4fun.android.animalstation.utilities.AnimalStation;
+import com.fixed4fun.android.animalstation.utilities.Translations;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
 
 public class YourScoreActivity extends AppCompatActivity {
 
@@ -29,6 +33,8 @@ public class YourScoreActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabaseInstance;
     private DatabaseReference mFirebaseDatabase;
     TextView anonimTextView;
+    TextView titleText;
+    ArrayList<String> textTranslations = Translations.getTranslationsNew(AnimalStation.getContext());
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,6 +49,9 @@ public class YourScoreActivity extends AppCompatActivity {
         yourPoints = findViewById(R.id.your_points_textview);
         yourTime = findViewById(R.id.your_time_textview);
         anonimTextView = findViewById(R.id.anonim);
+        anonimTextView.setText(textTranslations.get(31));
+        titleText = findViewById(R.id.title_textview);
+        titleText.setText(textTranslations.get(30));
 
         backtoMain = findViewById(R.id.back_to_main);
         backtoMain.setOnClickListener(view -> finish());
@@ -72,9 +81,6 @@ public class YourScoreActivity extends AppCompatActivity {
 
             mFirebaseDatabase = mFirebaseDatabaseInstance.getReference("scores");
             mFirebaseDatabase.push().setValue(score);
-        } else {
-            Toast.makeText(getApplicationContext(), "empty", Toast.LENGTH_LONG).show();
-
         }
 
 
