@@ -110,7 +110,7 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth.signInWithEmailAndPassword(username, passwordEditText.getText().toString().trim())
                 .addOnCompleteListener(RegisterActivity.this, (task) -> {
                     if (!task.isSuccessful()) {
-                        Toast.makeText(getApplicationContext(), textTranslations.get(40) + username, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), textTranslations.get(40) + usernameEditText.getText().toString(), Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(getApplicationContext(), textTranslations.get(41), Toast.LENGTH_LONG).show();
                         finish();

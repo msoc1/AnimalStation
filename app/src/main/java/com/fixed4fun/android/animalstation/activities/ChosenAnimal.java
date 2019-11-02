@@ -144,6 +144,7 @@ public class ChosenAnimal extends AppCompatActivity {
 
 
         animalsNames.setOnClickListener(v -> {
+            textToSpeech.setSpeechRate(0.7f);
             textToSpeech.speak(animal.getmAnimalName(), TextToSpeech.QUEUE_FLUSH, null);
 
         });

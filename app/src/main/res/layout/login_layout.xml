@@ -42,12 +42,11 @@
         android:id="@+id/passwordEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:ems="10"
         android:hint="password"
         android:inputType="textPassword"
         app:layout_constraintBaseline_toBaselineOf="@+id/passwordTextView"
-        app:layout_constraintStart_toEndOf="@+id/passwordTextView" />
+        app:layout_constraintStart_toStartOf="@+id/usernameEditText" />
 
     <Button
         android:id="@+id/register_button"
