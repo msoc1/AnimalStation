@@ -1,7 +1,10 @@
 package com.fixed4fun.android.animalstation.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -90,12 +93,54 @@ public class RankingActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        loginText.setVisibility(View.GONE);
+        if (!listOfGlobalScores.isEmpty()) {
+            listOfGlobalScores.clear();
+        } else {
+            prepareList();
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
         Intent intent = new Intent(RankingActivity.this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
+    }
+
+
+    public void prepareList() {
+        if (!checkInternetConnection()) {
+            loginText.setText("No internet");
+            progressBar.setVisibility(View.GONE);
+            loginText.setVisibility(View.VISIBLE);
+        } else {
+            mFirebaseInstance = FirebaseDatabase.getInstance();
+            mFirebaseDatabase = mFirebaseInstance.getReference("scores");
+            mFirebaseDatabase.keepSynced(true);
+            mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    progressBar.setVisibility(View.GONE);
+                    loginText.setVisibility(View.GONE);
+                    listOfGlobalScores.clear();
+                    listofLocalScores.clear();
+                    addData(dataSnapshot);
+                    adapter.notifyDataSetChanged();
+                    sorting(listOfGlobalScores);
+                    sorting(listofLocalScores);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
     }
 
     private void addData(DataSnapshot dataSnapshot) {
@@ -111,42 +156,6 @@ public class RankingActivity extends AppCompatActivity {
             }
             listOfGlobalScores.add(score);
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        loginText.setVisibility(View.GONE);
-        if (!listOfGlobalScores.isEmpty()) {
-            listOfGlobalScores.clear();
-        } else {
-            prepareList();
-        }
-    }
-
-
-    public void prepareList() {
-        mFirebaseInstance = FirebaseDatabase.getInstance();
-
-        mFirebaseDatabase = mFirebaseInstance.getReference("scores");
-        mFirebaseDatabase.keepSynced(true);
-        mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                progressBar.setVisibility(View.GONE);
-                listOfGlobalScores.clear();
-                listofLocalScores.clear();
-                addData(dataSnapshot);
-                adapter.notifyDataSetChanged();
-                sorting(listOfGlobalScores);
-                sorting(listofLocalScores);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
     }
 
 
@@ -176,7 +185,13 @@ public class RankingActivity extends AppCompatActivity {
     private void globalRankingOnclick() {
         loginText.setVisibility(View.GONE);
         if (listOfGlobalScores.isEmpty()) {
-            progressBar.setVisibility(View.VISIBLE);
+            if (!checkInternetConnection()) {
+                loginText.setText("No internet");
+                progressBar.setVisibility(View.GONE);
+                loginText.setVisibility(View.VISIBLE);
+            } else {
+                progressBar.setVisibility(View.VISIBLE);
+            }
         } else {
             progressBar.setVisibility(View.GONE);
         }
@@ -199,7 +214,11 @@ public class RankingActivity extends AppCompatActivity {
             adapter = new RankingListAdapter(this, listofLocalScores);
             rV.setAdapter(adapter);
             if (listofLocalScores.isEmpty()) {
-                loginText.setText("Go and play!");
+                if (checkInternetConnection()) {
+                    loginText.setText("Go and play!");
+                } else {
+                    loginText.setText("No internet");
+                }
                 loginText.setVisibility(View.VISIBLE);
             }
             adapter.notifyDataSetChanged();
@@ -210,5 +229,12 @@ public class RankingActivity extends AppCompatActivity {
             rV.setVisibility(View.GONE);
         }
     }
+
+    public boolean checkInternetConnection() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        return connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
+    }
+
 
 }

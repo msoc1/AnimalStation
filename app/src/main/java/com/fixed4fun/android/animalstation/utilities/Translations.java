@@ -32,7 +32,6 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.StrictMode;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -55,7 +54,6 @@ public class Translations extends AppCompatActivity {
     static String englishLanguage;
     private static Translate translate;
     private static boolean connected;
-    private ProgressBar progressBar;
 
     private static final String SHARED_PREFS = "sharedPrefs";
     private static final String ENGLISH_KEY = "english_language";
@@ -63,7 +61,7 @@ public class Translations extends AppCompatActivity {
     private static final String SPANISH_KEY = "spanish_language";
     private static final String FRENCH_KEY = "french_language";
     private static final String ITALIAN_KEY = "italian_language";
-    private static final String UKRAINIAN_LANGUAGE = "ukrainian_language";
+    private static final String UKRAINIAN_KEY = "ukrainian_language";
 
     private static final String SHORT_EN = "en";
     private static final String SHORT_PL = "pl";
@@ -72,7 +70,6 @@ public class Translations extends AppCompatActivity {
     private static final String SHORT_IT = "it";
     private static final String SHORT_UA = "uk";
 
-    static String TAG = "testingLanguage2";
     static ArrayList<String> translationsNew;
 
     public static ArrayList<String> getTranslationsNew(Context context) {
@@ -109,25 +106,18 @@ public class Translations extends AppCompatActivity {
                 engArray.add("koala");
                 engArray.add("SIGN IN");
                 /*index 25*/
-                engArray.add("sign out");
-                engArray.add("local");
-                engArray.add("global");
-                engArray.add("username");
-                engArray.add("password");
+                engArray.add("Sign out");
+                engArray.add("Local");
+                engArray.add("Global");
+                engArray.add("Username");
+                engArray.add("Password");
                 /*index 30*/
-                engArray.add("your score");
-                engArray.add("anonymous");
-                engArray.add("register");
-                engArray.add("log in");
-                engArray.add("Enter username!");
-                /*index 35*/
-                engArray.add("Username too long!");
-                engArray.add("Enter password!");
-                engArray.add("Enter longer password!");
-                engArray.add("Spaces not allowed!");
-                engArray.add("You can log in!");
-                /*index 40*/
+                engArray.add("Your score");
+                engArray.add("Anonymous");
+                engArray.add("Register");
+                engArray.add("Log in");
                 engArray.add("Cannot log in");
+                /*index 35*/
                 engArray.add("Logged in!");
                 engArray.add("Signing out");
 
@@ -152,17 +142,11 @@ public class Translations extends AppCompatActivity {
         } else if (MainActivity.languageNumber == 4) {
             loadOrDownloadLanguage(context, ITALIAN_KEY, SHORT_IT);
         } else if (MainActivity.languageNumber == 5) {
-            loadOrDownloadLanguage(context, UKRAINIAN_LANGUAGE, SHORT_UA);
+            loadOrDownloadLanguage(context, UKRAINIAN_KEY, SHORT_UA);
         }
         return translationsNew;
 
     }
-
-    public static void toastOnNoInternet() {
-        Toast.makeText(AnimalStation.getContext(), "No Internet", Toast.LENGTH_LONG).show();
-
-    }
-
 
     public static ArrayList<String> loadOrDownloadLanguage(Context context, String COUNTRY_KEY, String SHORT_LANG_CODE) {
         if (loadData(context, COUNTRY_KEY).length() != 0) {
@@ -171,7 +155,11 @@ public class Translations extends AppCompatActivity {
             if (checkInternetConnection()) {
                 downloadNewLanguage(context, COUNTRY_KEY, SHORT_LANG_CODE);
             } else {
-                toastOnNoInternet();
+                try {
+                    Toast.makeText(AnimalStation.getContext(), "No Internet", Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
         return translationsNew;

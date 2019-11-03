@@ -1,17 +1,21 @@
 package com.fixed4fun.android.animalstation.activities;
 
+import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
-import android.media.SoundPool;
+import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.speech.tts.TextToSpeech;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,13 +24,18 @@ import com.fixed4fun.android.animalstation.R;
 import com.fixed4fun.android.animalstation.adapters.LanguageAdapter;
 import com.fixed4fun.android.animalstation.utilities.AnimalsToUse;
 import com.fixed4fun.android.animalstation.utilities.LanguagesToUse;
+import com.fixed4fun.android.animalstation.utilities.LocaleMap;
+
+import static com.fixed4fun.android.animalstation.utilities.AnimalStation.getContext;
 
 public class LanguagesView extends AppCompatActivity {
 
     private Toast toast;
     private Handler h;
-    private SoundPool soundPool;
     private ProgressBar progressBar;
+    private TextView loadingTextView;
+    TextToSpeech textToSpeech;
+    static String SHARED_PREFS = "sharedPrefs";
 
 
     @Override
@@ -40,6 +49,8 @@ public class LanguagesView extends AppCompatActivity {
 
         progressBar = findViewById(R.id.languageProgressBar);
         progressBar.setVisibility(View.INVISIBLE);
+        loadingTextView = findViewById(R.id.load_text_view);
+        loadingTextView.setVisibility(View.INVISIBLE);
 
         final ImageView flag = findViewById(R.id.falg2);
         flag.setImageResource(LanguagesToUse.getLanguages().get(MainActivity.languageNumber).getmLanguageChosen());
@@ -62,52 +73,76 @@ public class LanguagesView extends AppCompatActivity {
         GridView gridView = findViewById(R.id.gridViewLanguages);
         gridView.setAdapter(adapter);
 
-        soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
-
 
         gridView.setOnItemClickListener((parent, view, position, id) -> {
             MainActivity.languageNumber = LanguagesToUse.getLanguages().get(position).getmCodeOfCountry();
-            startAsync();
-            final int sound1 = soundPool.load(getApplicationContext(), LanguagesToUse.getLanguages().get(position).getmNameOfLanguage(), 1);
-            h.postDelayed(() -> {
-                ImageView view2 = new ImageView(getApplicationContext());
-                view2.setImageResource(LanguagesToUse.getLanguages().get(position).getmLanguageChosen());
-                toast.setView(view2);
-                toast.setDuration(Toast.LENGTH_SHORT);
-                toast.show();
-                soundPool.play(sound1, 1, 1, 0, 0, 1);
-                final ImageView falg1 = findViewById(R.id.falg2);
-                falg1.setImageResource(LanguagesToUse.getLanguages().get(MainActivity.languageNumber).getmLanguage());
-                h.postDelayed(() -> {
-                    toast.cancel();
-                }, 1000);
-
-            }, 100);
-
+            if (checkInternetConnection() || loadData(languageCode(position)).length() >= 20) {
+                loadLanguage(position);
+            } else {
+                Toast.makeText(getApplicationContext(), "No internet", Toast.LENGTH_LONG).show();
+            }
         });
-
-
     }
+
+    public void loadLanguage(int position) {
+        textToSpeech = new TextToSpeech(getApplicationContext(), i -> textToSpeech.setLanguage(LocaleMap.getLocales()));
+        saveLanguageToPrefs(position);
+        startAsync();
+        h.postDelayed(() -> {
+            textToSpeech.speak(LanguagesToUse.getLanguages().get(position).getNameOfCountry(), TextToSpeech.QUEUE_FLUSH, null);
+            ImageView view2 = new ImageView(getApplicationContext());
+            view2.setImageResource(LanguagesToUse.getLanguages().get(position).getmLanguageChosen());
+            toast.setView(view2);
+            toast.setDuration(Toast.LENGTH_SHORT);
+            toast.show();
+            final ImageView falg1 = findViewById(R.id.falg2);
+            falg1.setImageResource(LanguagesToUse.getLanguages().get(MainActivity.languageNumber).getmLanguage());
+            h.postDelayed(() -> toast.cancel(), 800);
+
+        }, 100);
+    }
+
 
     public void startAsync() {
         TranslateAsyncTask task = new TranslateAsyncTask();
         task.execute();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        h.postDelayed(() -> {
-            if (soundPool != null) {
-                soundPool.release();
-                soundPool = null;
-            }
 
-        }, 300);
-
-
+    private String languageCode(int number) {
+        if (number == 0) {
+            return "polish_language";
+        } else if (number == 1) {
+            return "english_language";
+        } else if (number == 2) {
+            return "spanish_language";
+        } else if (number == 3) {
+            return "french_language";
+        } else if (number == 4) {
+            return "italian_language";
+        } else
+            return "ukrainian_language";
     }
 
+    public static String loadData(String whichLanguageKEY) {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        String text = sharedPreferences.getString(whichLanguageKEY, "");
+        return text;
+    }
+
+    public static void saveLanguageToPrefs(int positionOfLanguage) {
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("language_key", positionOfLanguage);
+        editor.apply();
+    }
+
+
+    public static boolean checkInternetConnection() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        return connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED;
+    }
 
     private class TranslateAsyncTask extends AsyncTask<Void, Void, Intent> {
 
@@ -115,6 +150,7 @@ public class LanguagesView extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             progressBar.setVisibility(View.VISIBLE);
+            loadingTextView.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -129,9 +165,9 @@ public class LanguagesView extends AppCompatActivity {
             }
             chosenLanguage.putExtra("My Animal", AnimalsToUse.getAnimals().get(ChosenAnimalsView.pos));
             chosenLanguage.putExtra("My Language", LanguagesToUse.getLanguages().get(MainActivity.languageNumber).getmCodeOfCountry());
-
             return chosenLanguage;
         }
+
 
         @Override
         protected void onPostExecute(Intent intent) {
@@ -141,6 +177,7 @@ public class LanguagesView extends AppCompatActivity {
             finish();
             ChosenAnimalsView.wasOnList = false;
             ChosenAnimal.wasOnAnimal = false;
+
         }
     }
 

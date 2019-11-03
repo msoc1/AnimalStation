@@ -1,6 +1,7 @@
 package com.fixed4fun.android.animalstation.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,12 +29,12 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    public static int languageNumber = 1;
+    public static int languageNumber = returnLanguage();
     public static String nameForQuiz;
     private Button signInButton;
     private FirebaseAuth firebaseAuth;
     static ArrayList<Score> listOfScores;
-    ArrayList<String> textTranslations;// = Translations.getTranslationsNew(AnimalStation.getContext());
+    ArrayList<String> textTranslations;
 
 
     public int numberOfQuestion;
@@ -43,6 +44,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static long pauseChrono;
     private String username;
 
+    public static int returnLanguage() {
+        SharedPreferences sharedPreferences = AnimalStation.getContext().getSharedPreferences("sharedPrefs", MODE_PRIVATE);
+        return sharedPreferences.getInt("language_key", 1);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onStart();
         textTranslations = Translations.getTranslationsNew(AnimalStation.getContext());
         Log.d("TAG", "onCreate: " + textTranslations.size());
-        signInButton.setText(( " " + username));
+        signInButton.setText((" " + username));
 
     }
 
@@ -110,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             String fullName = firebaseAuth.getCurrentUser().getEmail();
             username = fullName.split("@")[0];
-            Toast.makeText(getApplicationContext(), textTranslations.get(42) + " " + username, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), textTranslations.get(36) + " " + username, Toast.LENGTH_SHORT).show();
             signInButton.setText(textTranslations.get(24));
             firebaseAuth.signOut();
         }
@@ -124,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else {
             String fullName = firebaseAuth.getCurrentUser().getEmail();
             username = fullName.split("@")[0];
-            signInButton.setText(textTranslations.get(25)+" " + username);
+            signInButton.setText(textTranslations.get(25) + " " + username);
         }
     }
 

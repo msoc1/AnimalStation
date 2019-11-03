@@ -75,49 +75,56 @@ public class RegisterActivity extends AppCompatActivity {
         username = usernameEditText.getText().toString().trim();
         password = passwordEditText.getText().toString().trim();
         if (username.isEmpty()) {
-            Toast.makeText(getApplicationContext(), textTranslations.get(34), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Enter username!", Toast.LENGTH_SHORT).show();
         } else if (username.length() > 14) {
-            Toast.makeText(getApplicationContext(), textTranslations.get(35), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Username too long!", Toast.LENGTH_SHORT).show();
         } else if (password.isEmpty()) {
-            Toast.makeText(getApplicationContext(), textTranslations.get(36), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
         } else if (password.length() < 6) {
-            Toast.makeText(getApplicationContext(), textTranslations.get(37), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Enter longer password!", Toast.LENGTH_SHORT).show();
         } else if (username.contains(" ")) {
-            Toast.makeText(getApplicationContext(), textTranslations.get(38), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Spaces not allowed!", Toast.LENGTH_SHORT).show();
         } else {
 
 
             mAuth.createUserWithEmailAndPassword(username + "@animalstation.pl", password)
-                    .addOnCompleteListener(RegisterActivity.this, task -> {
+                    .addOnSuccessListener(RegisterActivity.this, task -> {
                         mFirebaseDatabase = mFirebaseDatabaseInstance.getReference("users");
                         user = FirebaseAuth.getInstance().getCurrentUser();
                         userID = user.getUid();
                         userEmail = username + "@animalstation.pl";
                         NewUser user = new NewUser(userEmail, userID);
-
                         mFirebaseDatabase.child(userID).setValue(user);
 
-                        Toast.makeText(getApplicationContext(), textTranslations.get(39), Toast.LENGTH_SHORT).show();
-                    });
+                        Toast.makeText(getApplicationContext(), textTranslations.get(33), Toast.LENGTH_SHORT).show();
+                    }).addOnFailureListener(RegisterActivity.this, task -> {
+                Toast.makeText(getApplicationContext(), "Username taken", Toast.LENGTH_SHORT).show();
+
+            });
         }
 
     }
 
     public void onLogin(View v) {
-        String username = usernameEditText.getText().toString().trim() + "@animalstation.pl";
+        username = usernameEditText.getText().toString().trim() + "@animalstation.pl";
+        String user = usernameEditText.getText().toString().trim();
         password = passwordEditText.getText().toString().trim();
+        if (user.length() == 0) {
+            Toast.makeText(getApplicationContext(), "Enter username!", Toast.LENGTH_LONG).show();
+        } else if (password.length() == 0) {
+            Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_LONG).show();
+        } else {
+            mAuth.signInWithEmailAndPassword(username, passwordEditText.getText().toString().trim())
+                    .addOnCompleteListener(RegisterActivity.this, (task) -> {
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), textTranslations.get(34) + " " + usernameEditText.getText().toString(), Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), textTranslations.get(35), Toast.LENGTH_LONG).show();
+                            finish();
+                        }
+                    });
 
-        mAuth.signInWithEmailAndPassword(username, passwordEditText.getText().toString().trim())
-                .addOnCompleteListener(RegisterActivity.this, (task) -> {
-                    if (!task.isSuccessful()) {
-                        Toast.makeText(getApplicationContext(), textTranslations.get(40) + usernameEditText.getText().toString(), Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), textTranslations.get(41), Toast.LENGTH_LONG).show();
-                        finish();
-                    }
-                });
-
+        }
     }
-
 
 }
