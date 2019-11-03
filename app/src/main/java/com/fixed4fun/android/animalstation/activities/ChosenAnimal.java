@@ -21,6 +21,7 @@ import com.fixed4fun.android.animalstation.objects.Animal;
 import com.fixed4fun.android.animalstation.utilities.AnimalsToUse;
 import com.fixed4fun.android.animalstation.utilities.LanguagesToUse;
 import com.fixed4fun.android.animalstation.utilities.LocaleMap;
+import com.fixed4fun.android.animalstation.utilities.Translations;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,11 +36,13 @@ public class ChosenAnimal extends AppCompatActivity {
     private int currentSound = (int) (Math.random() * 3);
     private SoundPool soundPool;
     TextToSpeech textToSpeech;
+    private TextView animalName;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.animal_detail_layout);
@@ -135,9 +138,8 @@ public class ChosenAnimal extends AppCompatActivity {
         });
 
 
-
-        TextView animalName = findViewById(R.id.name_of_anmial);
-        animalName.setText(animal.getmAnimalName());
+        animalName = findViewById(R.id.name_of_anmial);
+        animalName.setText(Translations.getTranslationsNew(getApplicationContext()).get(ChosenAnimalsView.pos));
 
 
         ConstraintLayout animalsNames = findViewById(R.id.names);
@@ -145,7 +147,7 @@ public class ChosenAnimal extends AppCompatActivity {
 
         animalsNames.setOnClickListener(v -> {
             textToSpeech.setSpeechRate(0.7f);
-            textToSpeech.speak(animal.getmAnimalName(), TextToSpeech.QUEUE_FLUSH, null);
+            textToSpeech.speak(Translations.getTranslationsNew(getApplicationContext()).get(ChosenAnimalsView.pos), TextToSpeech.QUEUE_FLUSH, null);
 
         });
 
@@ -181,6 +183,12 @@ public class ChosenAnimal extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        animalName.setText(Translations.getTranslationsNew(getApplicationContext()).get(ChosenAnimalsView.pos).toUpperCase());
     }
 
     @Override

@@ -29,7 +29,6 @@ public class ChosenAnimalsView extends AppCompatActivity {
         this.setContentView(R.layout.chosen_animal_view);
         AnimalsToUse.getAnimals();
 
-
         AnimalAdapter adapter = new AnimalAdapter(this, AnimalsToUse.getAnimals());
         GridView gridView = findViewById(R.id.gridView);
         gridView.setAdapter(adapter);
@@ -72,5 +71,15 @@ public class ChosenAnimalsView extends AppCompatActivity {
 
         });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        final ImageView falg = findViewById(R.id.falg2);
+        falg.setImageResource(LanguagesToUse.getLanguages().get(MainActivity.languageNumber).getmLanguage());
+        AnimalAdapter adapter = new AnimalAdapter(this, AnimalsToUse.getAnimals());
+        GridView gridView = findViewById(R.id.gridView);
+        gridView.setAdapter(adapter);
     }
 }
