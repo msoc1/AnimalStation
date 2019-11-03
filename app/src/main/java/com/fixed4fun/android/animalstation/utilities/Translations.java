@@ -32,7 +32,6 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.StrictMode;
-import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -82,10 +81,6 @@ public class Translations extends AppCompatActivity {
         translationsNew = new ArrayList<>();
 
         if (MainActivity.languageNumber == 1) {
-            Log.d(TAG, "getTranslationsNew: translationsNew: " + translationsNew.toString());
-            Log.d(TAG, "getTranslationsNew: polish: not here");
-            Log.d(TAG, "getTranslationsNew: english: " + engArray.toString());
-
             if (context.getSharedPreferences(SHARED_PREFS, MODE_PRIVATE).getString(ENGLISH_KEY, englishLanguage) == null) {
                 //ENGLISH LANGUAGE//
                 engArray.add("dog");
@@ -152,7 +147,7 @@ public class Translations extends AppCompatActivity {
             loadOrDownloadLanguage(context, POLISH_KEY, SHORT_PL);
         } else if (MainActivity.languageNumber == 2) {
             loadOrDownloadLanguage(context, SPANISH_KEY, SHORT_ES);
-        }  else if (MainActivity.languageNumber == 3) {
+        } else if (MainActivity.languageNumber == 3) {
             loadOrDownloadLanguage(context, FRENCH_KEY, SHORT_FR);
         } else if (MainActivity.languageNumber == 4) {
             loadOrDownloadLanguage(context, ITALIAN_KEY, SHORT_IT);
@@ -183,7 +178,6 @@ public class Translations extends AppCompatActivity {
     }
 
     public static ArrayList<String> returnIfInSharedPrefs(Context context, String KEY) {
-        Log.d(TAG, "returnIfInSharedPrefs: ");
         String jsonToLoad = loadData(context, KEY);
         translationsNew = fromJson(jsonToLoad, new TypeToken<ArrayList<String>>() {
         }.getType());
@@ -191,7 +185,6 @@ public class Translations extends AppCompatActivity {
     }
 
     public static void downloadNewLanguage(Context context, String KEY, String languageShort) {
-        Log.d(TAG, "downloadNewLanguage: ");
         String englishLanguageJson = loadData(context, ENGLISH_KEY);
         translationsNew = fromJson(englishLanguageJson, new TypeToken<ArrayList<String>>() {
         }.getType());
@@ -264,21 +257,8 @@ public class Translations extends AppCompatActivity {
                 Translate.TranslateOption.targetLanguage(targerLanguage), Translate.TranslateOption.model("base"));
         translatedText = translation.getTranslatedText();
         if (translatedText.contains("&#39;")) {
-            translatedText= translatedText.replaceAll("&#39;", "\'");
+            translatedText = translatedText.replaceAll("&#39;", "\'");
         }
         return translatedText;
     }
 }
-
-
-// else if (MainActivity.languageNumber == 2) {
-//            //SPANISH LANGUAGE//
-//        } else if (MainActivity.languageNumber == 3) {
-//            //FRENCH LANGUAGE//
-//        } else if (MainActivity.languageNumber == 4) {
-//            //ITALIAN LANGUAGE//
-//        } else if (MainActivity.languageNumber == 5) {
-//            //UKRAINIAN LANGUAGE//
-
-
-
